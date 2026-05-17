@@ -1,9 +1,5 @@
 <p align="center">Seal Code is an open source AI coding agent for the terminal.</p>
 <p align="center">
-  <a href="https://github.com/mnmalali/sealcode/actions"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/mnmalali/sealcode/publish.yml?style=flat-square&branch=dev" /></a>
-</p>
-
-<p align="center">
   <a href="README.md">English</a> |
   <a href="README.zh.md">简体中文</a> |
   <a href="README.zht.md">繁體中文</a> |
