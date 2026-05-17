@@ -3,7 +3,7 @@
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Logo Sealcode">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Logo Seal Code">
     </picture>
   </a>
 </p>
@@ -39,7 +39,9 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![Sealcode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://github.com/mnmalali/sealcode)
+<p align="center">
+  <img src="packages/web/src/assets/lander/seal-code-banner.png" alt="Seal Code banner">
+</p>
 
 ---
 
@@ -66,7 +68,7 @@ nix run nixpkgs#sealcode           # oppure github:mnmalali/sealcode per l’ult
 
 ### App Desktop (BETA)
 
-Sealcode è disponibile anche come applicazione desktop. Puoi scaricarla direttamente dalla [pagina delle release](https://github.com/mnmalali/sealcode/releases) oppure da [github.com/mnmalali/sealcode/download](https://github.com/mnmalali/sealcode/download).
+Seal Code è disponibile anche come applicazione desktop. Puoi scaricarla direttamente dalla [pagina delle release](https://github.com/mnmalali/sealcode/releases) oppure da [github.com/mnmalali/sealcode/download](https://github.com/mnmalali/sealcode/download).
 
 | Piattaforma           | Download                           |
 | --------------------- | ---------------------------------- |
@@ -99,7 +101,7 @@ XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://github.com/mnmalali/sealcode/ins
 
 ### Agenti
 
-Sealcode include due agenti integrati tra cui puoi passare usando il tasto `Tab`.
+Seal Code include due agenti integrati tra cui puoi passare usando il tasto `Tab`.
 
 - **build** – Predefinito, agente con accesso completo per il lavoro di sviluppo
 - **plan** – Agente in sola lettura per analisi ed esplorazione del codice
@@ -114,15 +116,15 @@ Scopri di più sugli [agenti](https://github.com/mnmalali/sealcode/docs/agents).
 
 ### Documentazione
 
-Per maggiori informazioni su come configurare Sealcode, [**consulta la nostra documentazione**](https://github.com/mnmalali/sealcode/docs).
+Per maggiori informazioni su come configurare Seal Code, [**consulta la nostra documentazione**](https://github.com/mnmalali/sealcode/docs).
 
 ### Contribuire
 
-Se sei interessato a contribuire a Sealcode, leggi la nostra [guida alla contribuzione](./CONTRIBUTING.md) prima di inviare una pull request.
+Se sei interessato a contribuire a Seal Code, leggi la nostra [guida alla contribuzione](./CONTRIBUTING.md) prima di inviare una pull request.
 
-### Costruire su Sealcode
+### Costruire su Seal Code
 
-Se stai lavorando a un progetto correlato a Sealcode e che utilizza “sealcode” come parte del nome (ad esempio “sealcode-dashboard” o “sealcode-mobile”), aggiungi una nota nel tuo README per chiarire che non è sviluppato dal team Sealcode e che non è affiliato in alcun modo con noi.
+Se stai lavorando a un progetto correlato a Seal Code e che utilizza “sealcode” come parte del nome (ad esempio “sealcode-dashboard” o “sealcode-mobile”), aggiungi una nota nel tuo README per chiarire che non è sviluppato dal team Seal Code e che non è affiliato in alcun modo con noi.
 
 ### FAQ
 
@@ -131,10 +133,10 @@ Se stai lavorando a un progetto correlato a Sealcode e che utilizza “sealcode�
 È molto simile a Claude Code in termini di funzionalità. Ecco le principali differenze:
 
 - 100% open source
-- Non è legato a nessun provider. Anche se consigliamo i modelli forniti tramite [Sealcode Zen](https://github.com/mnmalali/sealcode/zen), Sealcode può essere utilizzato con Claude, OpenAI, Google o persino modelli locali. Con l’evoluzione dei modelli, le differenze tra di essi si ridurranno e i prezzi scenderanno, quindi essere indipendenti dal provider è importante.
+- Non è legato a nessun provider. Anche se consigliamo i modelli forniti tramite [Seal Code Zen](https://github.com/mnmalali/sealcode/zen), Seal Code può essere utilizzato con Claude, OpenAI, Google o persino modelli locali. Con l’evoluzione dei modelli, le differenze tra di essi si ridurranno e i prezzi scenderanno, quindi essere indipendenti dal provider è importante.
 - Supporto LSP pronto all’uso
-- Forte attenzione alla TUI. Sealcode è sviluppato da utenti neovim e dai creatori di [terminal.shop](https://terminal.shop); spingeremo al limite ciò che è possibile fare nel terminale.
-- Architettura client/server. Questo, ad esempio, permette a Sealcode di girare sul tuo computer mentre lo controlli da remoto tramite un’app mobile. La frontend TUI è quindi solo uno dei possibili client.
+- Forte attenzione alla TUI. Seal Code è sviluppato da utenti neovim e dai creatori di [terminal.shop](https://terminal.shop); spingeremo al limite ciò che è possibile fare nel terminale.
+- Architettura client/server. Questo, ad esempio, permette a Seal Code di girare sul tuo computer mentre lo controlli da remoto tramite un’app mobile. La frontend TUI è quindi solo uno dei possibili client.
 
 ---
 

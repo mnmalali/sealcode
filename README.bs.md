@@ -3,11 +3,11 @@
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Sealcode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Seal Code logo">
     </picture>
   </a>
 </p>
-<p align="center">Sealcode je open source AI agent za programiranje.</p>
+<p align="center">Seal Code je open source AI agent za programiranje.</p>
 <p align="center">
   <a href="https://github.com/mnmalali/sealcode/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
   <a href="https://www.npmjs.com/package/sealcode-ai"><img alt="npm" src="https://img.shields.io/npm/v/sealcode-ai?style=flat-square" /></a>
@@ -39,7 +39,9 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![Sealcode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://github.com/mnmalali/sealcode)
+<p align="center">
+  <img src="packages/web/src/assets/lander/seal-code-banner.png" alt="Seal Code banner">
+</p>
 
 ---
 
@@ -66,7 +68,7 @@ nix run nixpkgs#sealcode           # ili github:mnmalali/sealcode za najnoviji d
 
 ### Desktop aplikacija (BETA)
 
-Sealcode je dostupan i kao desktop aplikacija. Preuzmi je direktno sa [stranice izdanja](https://github.com/mnmalali/sealcode/releases) ili sa [github.com/mnmalali/sealcode/download](https://github.com/mnmalali/sealcode/download).
+Seal Code je dostupan i kao desktop aplikacija. Preuzmi je direktno sa [stranice izdanja](https://github.com/mnmalali/sealcode/releases) ili sa [github.com/mnmalali/sealcode/download](https://github.com/mnmalali/sealcode/download).
 
 | Platforma             | Preuzimanje                        |
 | --------------------- | ---------------------------------- |
@@ -99,7 +101,7 @@ XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://github.com/mnmalali/sealcode/ins
 
 ### Agenti
 
-Sealcode uključuje dva ugrađena agenta između kojih možeš prebacivati tasterom `Tab`.
+Seal Code uključuje dva ugrađena agenta između kojih možeš prebacivati tasterom `Tab`.
 
 - **build** - Podrazumijevani agent sa punim pristupom za razvoj
 - **plan** - Agent samo za čitanje za analizu i istraživanje koda
@@ -114,15 +116,15 @@ Saznaj više o [agentima](https://github.com/mnmalali/sealcode/docs/agents).
 
 ### Dokumentacija
 
-Za više informacija o konfiguraciji Sealcode-a, [**pogledaj dokumentaciju**](https://github.com/mnmalali/sealcode/docs).
+Za više informacija o konfiguraciji Seal Code-a, [**pogledaj dokumentaciju**](https://github.com/mnmalali/sealcode/docs).
 
 ### Doprinosi
 
-Ako želiš doprinositi Sealcode-u, pročitaj [upute za doprinošenje](./CONTRIBUTING.md) prije slanja pull requesta.
+Ako želiš doprinositi Seal Code-u, pročitaj [upute za doprinošenje](./CONTRIBUTING.md) prije slanja pull requesta.
 
-### Gradnja na Sealcode-u
+### Gradnja na Seal Code-u
 
-Ako radiš na projektu koji je povezan s Sealcode-om i koristi "sealcode" kao dio naziva, npr. "sealcode-dashboard" ili "sealcode-mobile", dodaj napomenu u svoj README da projekat nije napravio Sealcode tim i da nije povezan s nama.
+Ako radiš na projektu koji je povezan s Seal Code-om i koristi "sealcode" kao dio naziva, npr. "sealcode-dashboard" ili "sealcode-mobile", dodaj napomenu u svoj README da projekat nije napravio Seal Code tim i da nije povezan s nama.
 
 ### FAQ
 
@@ -131,10 +133,10 @@ Ako radiš na projektu koji je povezan s Sealcode-om i koristi "sealcode" kao di
 Po mogućnostima je vrlo sličan Claude Code-u. Ključne razlike su:
 
 - 100% open source
-- Nije vezan za jednog provajdera. Iako preporučujemo modele koje nudimo kroz [Sealcode Zen](https://github.com/mnmalali/sealcode/zen), Sealcode možeš koristiti s Claude, OpenAI, Google ili čak lokalnim modelima. Kako modeli napreduju, razlike među njima će se smanjivati, a cijene padati, zato je nezavisnost od provajdera važna.
+- Nije vezan za jednog provajdera. Iako preporučujemo modele koje nudimo kroz [Seal Code Zen](https://github.com/mnmalali/sealcode/zen), Seal Code možeš koristiti s Claude, OpenAI, Google ili čak lokalnim modelima. Kako modeli napreduju, razlike među njima će se smanjivati, a cijene padati, zato je nezavisnost od provajdera važna.
 - LSP podrška odmah po instalaciji
-- Fokus na TUI. Sealcode grade neovim korisnici i kreatori [terminal.shop](https://terminal.shop); pomjeraćemo granice onoga što je moguće u terminalu.
-- Klijent/server arhitektura. To, recimo, omogućava da Sealcode radi na tvom računaru dok ga daljinski koristiš iz mobilne aplikacije, što znači da je TUI frontend samo jedan od mogućih klijenata.
+- Fokus na TUI. Seal Code grade neovim korisnici i kreatori [terminal.shop](https://terminal.shop); pomjeraćemo granice onoga što je moguće u terminalu.
+- Klijent/server arhitektura. To, recimo, omogućava da Seal Code radi na tvom računaru dok ga daljinski koristiš iz mobilne aplikacije, što znači da je TUI frontend samo jedan od mogućih klijenata.
 
 ---
 

@@ -3,11 +3,11 @@
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Sealcode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Seal Code logo">
     </picture>
   </a>
 </p>
-<p align="center">The open source AI coding agent.</p>
+<p align="center">Seal Code is an open source AI coding agent for the terminal.</p>
 <p align="center">
   <a href="https://github.com/mnmalali/sealcode/actions"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/mnmalali/sealcode/publish.yml?style=flat-square&branch=dev" /></a>
 </p>
@@ -37,7 +37,9 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![Sealcode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://github.com/mnmalali/sealcode)
+<p align="center">
+  <img src="packages/web/src/assets/lander/seal-code-banner.png" alt="Seal Code banner">
+</p>
 
 ---
 
@@ -50,11 +52,11 @@ bun run --cwd packages/sealcode script/build.ts --single --skip-install
 ```
 
 > [!TIP]
-> Published package-manager installers are not yet configured for this independent Sealcode project.
+> Package-manager installers are not published yet for this independent Seal Code project.
 
 ### Desktop App (BETA)
 
-Sealcode desktop packaging is inherited from the upstream codebase but independent release artifacts are not yet published. Future releases will be listed on the [releases page](https://github.com/mnmalali/sealcode/releases).
+Seal Code desktop packaging is inherited from the upstream codebase, but independent release artifacts are not published yet. Future releases will be listed on the [releases page](https://github.com/mnmalali/sealcode/releases).
 
 | Platform              | Download                           |
 | --------------------- | ---------------------------------- |
@@ -64,7 +66,7 @@ Sealcode desktop packaging is inherited from the upstream codebase but independe
 | Linux                 | `.deb`, `.rpm`, or `.AppImage`     |
 
 ```bash
-# Desktop package-manager installers are not yet published for Sealcode.
+# Desktop package-manager installers are not yet published for Seal Code.
 ```
 
 #### Installation Directory
@@ -84,7 +86,7 @@ XDG_BIN_DIR=$HOME/.local/bin ./install
 
 ### Agents
 
-Sealcode includes two built-in agents you can switch between with the `Tab` key.
+Seal Code includes two built-in agents you can switch between with the `Tab` key.
 
 - **build** - Default, full-access agent for development work
 - **plan** - Read-only agent for analysis and code exploration
@@ -99,15 +101,15 @@ Learn more about agents in `packages/web/src/content/docs/agents.mdx`.
 
 ### Documentation
 
-For more info on how to configure Sealcode, see the docs under `packages/web/src/content/docs`.
+For more info on how to configure Seal Code, see the docs under `packages/web/src/content/docs`.
 
 ### Contributing
 
-If you're interested in contributing to Sealcode, please read our [contributing docs](./CONTRIBUTING.md) before submitting a pull request.
+If you're interested in contributing to Seal Code, please read our [contributing docs](./CONTRIBUTING.md) before submitting a pull request.
 
-### Building on Sealcode
+### Building on Seal Code
 
-If you are working on a project that's related to Sealcode and is using "sealcode" as part of its name, for example "sealcode-dashboard" or "sealcode-mobile", please add a note to your README to clarify that it is not built by the Sealcode team and is not affiliated with us in any way.
+If you are working on a project that's related to Seal Code and is using "sealcode" as part of its name, for example "sealcode-dashboard" or "sealcode-mobile", please add a note to your README to clarify that it is not built by the Seal Code team and is not affiliated with us in any way.
 
 ### FAQ
 
@@ -116,13 +118,13 @@ If you are working on a project that's related to Sealcode and is using "sealcod
 It's very similar to Claude Code in terms of capability. Here are the key differences:
 
 - 100% open source
-- Not coupled to any provider. Sealcode can be used with Claude, OpenAI, Google, or local models. As models evolve, the gaps between them will close and pricing will drop, so being provider-agnostic is important.
+- Not coupled to any provider. Seal Code can be used with Claude, OpenAI, Google, or local models. As models evolve, the gaps between them will close and pricing will drop, so being provider-agnostic is important.
 - Built-in opt-in LSP support
-- A focus on TUI. Sealcode is built by neovim users and the creators of [terminal.shop](https://terminal.shop); we are going to push the limits of what's possible in the terminal.
-- A client/server architecture. This, for example, can allow Sealcode to run on your computer while you drive it remotely from a mobile app, meaning that the TUI frontend is just one of the possible clients.
+- A focus on TUI. Seal Code is built for developers who want a fast terminal workflow.
+- A client/server architecture. This can allow Seal Code to run on your computer while you drive it remotely from another client, meaning that the TUI frontend is just one of the possible clients.
 
 ---
 
 ### Attribution
 
-Sealcode includes code derived from opencode by anomalyco under the MIT License. Sealcode is an independent rebranded project and is not affiliated with, endorsed by, or presented as an official GitHub fork of anomalyco/opencode.
+Seal Code includes code derived from opencode by anomalyco under the MIT License. Seal Code is an independent rebranded project and is not affiliated with, endorsed by, or presented as an official GitHub fork of anomalyco/opencode.
