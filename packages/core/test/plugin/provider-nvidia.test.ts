@@ -1,8 +1,8 @@
 import { describe, expect } from "bun:test"
 import { Effect } from "effect"
-import { PluginV2 } from "@opencode-ai/core/plugin"
-import { ProviderPlugins } from "@opencode-ai/core/plugin/provider"
-import { NvidiaPlugin } from "@opencode-ai/core/plugin/provider/nvidia"
+import { PluginV2 } from "@sealcode-ai/core/plugin"
+import { ProviderPlugins } from "@sealcode-ai/core/plugin/provider"
+import { NvidiaPlugin } from "@sealcode-ai/core/plugin/provider/nvidia"
 import { expectPluginRegistered, it, provider } from "./provider-helper"
 
 describe("NvidiaPlugin", () => {
@@ -32,9 +32,9 @@ describe("NvidiaPlugin", () => {
       const ignored = yield* plugin.trigger("provider.update", {}, { provider: provider("openrouter"), cancel: false })
       expect(result.provider.options.headers).toEqual({
         Existing: "value",
-        "HTTP-Referer": "https://opencode.ai/",
-        "X-Title": "opencode",
-        "X-BILLING-INVOKE-ORIGIN": "OpenCode",
+        "HTTP-Referer": "https://github.com/mnmalali/sealcode/",
+        "X-Title": "sealcode",
+        "X-BILLING-INVOKE-ORIGIN": "Sealcode",
       })
       expect(ignored.provider.options.headers).toEqual({})
     }),
@@ -57,9 +57,9 @@ describe("NvidiaPlugin", () => {
       )
 
       expect(result.provider.options.headers).toEqual({
-        "HTTP-Referer": "https://opencode.ai/",
-        "X-Title": "opencode",
-        "X-BILLING-INVOKE-ORIGIN": "OpenCode",
+        "HTTP-Referer": "https://github.com/mnmalali/sealcode/",
+        "X-Title": "sealcode",
+        "X-BILLING-INVOKE-ORIGIN": "Sealcode",
       })
     }),
   )
@@ -84,8 +84,8 @@ describe("NvidiaPlugin", () => {
       )
 
       expect(result.provider.options.headers).toEqual({
-        "HTTP-Referer": "https://opencode.ai/",
-        "X-Title": "opencode",
+        "HTTP-Referer": "https://github.com/mnmalali/sealcode/",
+        "X-Title": "sealcode",
         "X-BILLING-INVOKE-ORIGIN": "CustomOrigin",
       })
     }),

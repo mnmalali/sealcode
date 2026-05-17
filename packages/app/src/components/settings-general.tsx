@@ -1,13 +1,13 @@
 import { Component, Show, createMemo, createResource, onMount, type JSX } from "solid-js"
 import { createStore } from "solid-js/store"
-import { Button } from "@opencode-ai/ui/button"
-import { Icon } from "@opencode-ai/ui/icon"
-import { Select } from "@opencode-ai/ui/select"
-import { Switch } from "@opencode-ai/ui/switch"
-import { TextField } from "@opencode-ai/ui/text-field"
-import { Tooltip } from "@opencode-ai/ui/tooltip"
-import { useTheme, type ColorScheme } from "@opencode-ai/ui/theme/context"
-import { showToast } from "@opencode-ai/ui/toast"
+import { Button } from "@sealcode-ai/ui/button"
+import { Icon } from "@sealcode-ai/ui/icon"
+import { Select } from "@sealcode-ai/ui/select"
+import { Switch } from "@sealcode-ai/ui/switch"
+import { TextField } from "@sealcode-ai/ui/text-field"
+import { Tooltip } from "@sealcode-ai/ui/tooltip"
+import { useTheme, type ColorScheme } from "@sealcode-ai/ui/theme/context"
+import { showToast } from "@sealcode-ai/ui/toast"
 import { useParams } from "@solidjs/router"
 import { useLanguage } from "@/context/language"
 import { usePermission } from "@/context/permission"
@@ -491,7 +491,7 @@ export const SettingsGeneral: Component = () => {
           description={
             <>
               {language.t("settings.general.row.theme.description")}{" "}
-              <Link href="https://opencode.ai/docs/themes/">{language.t("common.learnMore")}</Link>
+              <Link href="https://github.com/mnmalali/sealcode/docs/themes/">{language.t("common.learnMore")}</Link>
             </>
           }
         >
@@ -775,7 +775,7 @@ export const SettingsGeneral: Component = () => {
           </div>
         </Show>
 
-        <Show when={desktop() && import.meta.env.VITE_OPENCODE_CHANNEL === "beta"}>
+        <Show when={desktop() && import.meta.env.VITE_SEALCODE_CHANNEL === "beta"}>
           <AdvancedSection />
         </Show>
       </div>

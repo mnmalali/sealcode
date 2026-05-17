@@ -7,14 +7,14 @@
   makeWrapper,
   writableTmpDirAsHomeHook,
   autoPatchelfHook,
-  opencode,
+  sealcode,
 }:
 let
   electron = electron_41;
 in
 stdenv.mkDerivation (finalAttrs: {
-  pname = "opencode-desktop";
-  inherit (opencode) version src node_modules;
+  pname = "sealcode-desktop";
+  inherit (sealcode) version src node_modules;
 
   nativeBuildInputs = [
     bun
@@ -29,7 +29,7 @@ stdenv.mkDerivation (finalAttrs: {
     (lib.getLib stdenv.cc.cc)
   ];
 
-  env = opencode.env // {
+  env = sealcode.env // {
     ELECTRON_SKIP_BINARY_DOWNLOAD = "1";
   };
 
@@ -40,7 +40,7 @@ stdenv.mkDerivation (finalAttrs: {
     FILES=(src/main/windows.ts)
     for file in "''${FILES[@]}"; do
       substituteInPlace $BASE_PATH/$file \
-        --replace-fail "process.resourcesPath" "'$out/opt/opencode-desktop/resources'"
+        --replace-fail "process.resourcesPath" "'$out/opt/sealcode-desktop/resources'"
     done
   '';
 
@@ -74,15 +74,15 @@ stdenv.mkDerivation (finalAttrs: {
     + lib.optionalString stdenv.hostPlatform.isDarwin ''
       mkdir -p $out/Applications
       mv dist/mac*/*.app $out/Applications
-      makeWrapper "$out/Applications/OpenCode.app/Contents/MacOS/OpenCode" $out/bin/opencode-desktop
+      makeWrapper "$out/Applications/Sealcode.app/Contents/MacOS/Sealcode" $out/bin/sealcode-desktop
     ''
     + lib.optionalString stdenv.hostPlatform.isLinux ''
-      mkdir -p $out/opt/opencode-desktop
-      cp -r dist/linux*-unpacked/{resources,LICENSE*} $out/opt/opencode-desktop
-      makeWrapper ${lib.getExe electron} $out/bin/opencode-desktop \
+      mkdir -p $out/opt/sealcode-desktop
+      cp -r dist/linux*-unpacked/{resources,LICENSE*} $out/opt/sealcode-desktop
+      makeWrapper ${lib.getExe electron} $out/bin/sealcode-desktop \
         --inherit-argv0 \
         --set ELECTRON_FORCE_IS_PACKAGED 1 \
-        --add-flags $out/opt/opencode-desktop/resources/app.asar \
+        --add-flags $out/opt/sealcode-desktop/resources/app.asar \
         --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}"
     ''
     + ''
@@ -94,8 +94,8 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   meta = {
-    description = "OpenCode Desktop App";
-    mainProgram = "opencode-desktop";
-    inherit (opencode.meta) homepage license platforms;
+    description = "Sealcode Desktop App";
+    mainProgram = "sealcode-desktop";
+    inherit (sealcode.meta) homepage license platforms;
   };
 })

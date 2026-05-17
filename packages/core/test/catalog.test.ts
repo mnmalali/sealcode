@@ -1,11 +1,11 @@
 import { describe, expect } from "bun:test"
 import { DateTime, Effect, Fiber, Layer, Option, Stream } from "effect"
-import { Catalog } from "@opencode-ai/core/catalog"
-import { EventV2 } from "@opencode-ai/core/event"
-import { Location } from "@opencode-ai/core/location"
-import { ModelV2 } from "@opencode-ai/core/model"
-import { PluginV2 } from "@opencode-ai/core/plugin"
-import { ProviderV2 } from "@opencode-ai/core/provider"
+import { Catalog } from "@sealcode-ai/core/catalog"
+import { EventV2 } from "@sealcode-ai/core/event"
+import { Location } from "@sealcode-ai/core/location"
+import { ModelV2 } from "@sealcode-ai/core/model"
+import { PluginV2 } from "@sealcode-ai/core/plugin"
+import { ProviderV2 } from "@sealcode-ai/core/provider"
 import { testEffect } from "./lib/effect"
 
 const locationLayer = Layer.succeed(Location.Service, Location.Service.of({ directory: "test" }))
