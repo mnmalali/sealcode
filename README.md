@@ -1,12 +1,3 @@
-<p align="center">
-  <a href="https://github.com/mnmalali/sealcode">
-    <picture>
-      <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
-      <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Seal Code logo">
-    </picture>
-  </a>
-</p>
 <p align="center">Seal Code is an open source AI coding agent for the terminal.</p>
 <p align="center">
   <a href="https://github.com/mnmalali/sealcode/actions"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/mnmalali/sealcode/publish.yml?style=flat-square&branch=dev" /></a>
