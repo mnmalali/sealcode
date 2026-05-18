@@ -29,6 +29,7 @@ import * as Log from "@sealcode-ai/core/util/log"
 import { LspTool } from "./lsp"
 import * as Truncate from "./truncate"
 import { ApplyPatchTool } from "./apply_patch"
+import { GoalTool } from "./goal"
 import { Glob } from "@sealcode-ai/core/util/glob"
 import path from "path"
 import { pathToFileURL } from "url"
@@ -53,6 +54,7 @@ import { Reference } from "@/reference/reference"
 import { BackgroundJob } from "@/background/job"
 import { SessionStatus } from "@/session/status"
 import { RuntimeFlags } from "@/effect/runtime-flags"
+import { SessionGoal } from "@/session/goal"
 
 const log = Log.create({ service: "tool.registry" })
 
@@ -132,6 +134,7 @@ export const layer: Layer.Layer<
     const edit = yield* EditTool
     const greptool = yield* GrepTool
     const patchtool = yield* ApplyPatchTool
+    const goaltool = yield* GoalTool.pipe(Effect.provide(SessionGoal.defaultLayer))
     const skilltool = yield* SkillTool
     const agent = yield* Agent.Service
 
@@ -234,6 +237,7 @@ export const layer: Layer.Layer<
           repo_overview: Tool.init(repoOverview),
           skill: Tool.init(skilltool),
           patch: Tool.init(patchtool),
+          goal: Tool.init(goaltool),
           question: Tool.init(question),
           lsp: Tool.init(lsptool),
           plan: Tool.init(plan),
@@ -258,6 +262,7 @@ export const layer: Layer.Layer<
             ...(flags.experimentalScout ? [tool.repo_clone, tool.repo_overview] : []),
             tool.skill,
             tool.patch,
+            tool.goal,
             ...(flags.experimentalLspTool ? [tool.lsp] : []),
             ...(flags.experimentalPlanMode && flags.client === "cli" ? [tool.plan] : []),
           ],
