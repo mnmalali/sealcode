@@ -27,6 +27,7 @@ import { LLM } from "../../src/session/llm"
 import { MessageV2 } from "../../src/session/message-v2"
 import { AppFileSystem } from "@sealcode-ai/core/filesystem"
 import { SessionCompaction } from "../../src/session/compaction"
+import { SessionGoal } from "../../src/session/goal"
 import { SessionSummary } from "../../src/session/summary"
 import { Instruction } from "../../src/session/instruction"
 import { SessionProcessor } from "../../src/session/processor"
@@ -179,6 +180,7 @@ function makeHttp(input?: { processor?: "blocking" }) {
     mcp,
     AppFileSystem.defaultLayer,
     BackgroundJob.defaultLayer,
+    SessionGoal.defaultLayer,
     status,
     SyncEvent.defaultLayer,
     EventV2Bridge.defaultLayer,
@@ -217,6 +219,7 @@ function makeHttp(input?: { processor?: "blocking" }) {
     TestLLMServer.layer,
     SessionPrompt.layer.pipe(
       Layer.provide(SessionRevert.defaultLayer),
+      Layer.provide(SessionGoal.defaultLayer),
       Layer.provide(Image.defaultLayer),
       Layer.provide(Reference.defaultLayer),
       Layer.provide(summary),
@@ -473,6 +476,123 @@ it.instance(
       const parts = result.parts.filter((p) => p.type === "text")
       expect(parts.some((p) => p.type === "text" && p.text === "world")).toBe(true)
       expect(yield* llm.hits).toHaveLength(1)
+    }),
+  { git: true },
+)
+
+it.instance(
+  "lists goal as a built-in slash command",
+  () =>
+    Effect.gen(function* () {
+      yield* useServerConfig(providerCfg)
+      const commands = yield* Command.Service.use((command) => command.list())
+
+      expect(commands).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            name: "goal",
+            source: "command",
+          }),
+        ]),
+      )
+    }),
+  { git: true },
+)
+
+it.instance(
+  "goal command keeps the loop alive until the goal tool marks it achieved",
+  () =>
+    Effect.gen(function* () {
+      const { llm } = yield* useServerConfig(providerCfg)
+      const prompt = yield* SessionPrompt.Service
+      const sessions = yield* Session.Service
+      const session = yield* sessions.create({
+        title: "Goal loop",
+        permission: [{ permission: "*", pattern: "*", action: "allow" }],
+      })
+
+      yield* llm.text("I checked the first thing.")
+      yield* llm.tool("goal", { status: "achieved", reason: "verified with tests" })
+      yield* llm.text("Goal complete.")
+
+      const result = yield* prompt.command({
+        sessionID: session.id,
+        command: "goal",
+        arguments: "make the tests pass",
+        agent: "build",
+        model: "test/test-model",
+      })
+
+      const messages = yield* sessions.messages({ sessionID: session.id })
+      expect(yield* llm.calls).toBe(3)
+      expect(
+        messages.some((message) =>
+          message.parts.some(
+            (part) =>
+              part.type === "text" &&
+              part.synthetic === true &&
+              part.text.includes("Continue working toward your goal: make the tests pass"),
+          ),
+        ),
+      ).toBe(true)
+      expect(result.parts.some((part) => part.type === "text" && part.text === "Goal complete.")).toBe(true)
+    }),
+  { git: true },
+)
+
+it.instance(
+  "goal command reports, pauses, resumes, and clears active goals",
+  () =>
+    Effect.gen(function* () {
+      const { llm } = yield* useServerConfig(providerCfg)
+      const prompt = yield* SessionPrompt.Service
+      const sessions = yield* Session.Service
+      const goal = yield* SessionGoal.Service
+      const session = yield* sessions.create({
+        title: "Goal controls",
+        permission: [{ permission: "*", pattern: "*", action: "allow" }],
+      })
+
+      yield* goal.create({ sessionID: session.id, objective: "ship the thing" })
+
+      const status = yield* prompt.command({
+        sessionID: session.id,
+        command: "goal",
+        arguments: "",
+        agent: "build",
+        model: "test/test-model",
+      })
+      expect(status.parts.some((part) => part.type === "text" && part.text.includes("Status: pursuing"))).toBe(true)
+
+      const paused = yield* prompt.command({
+        sessionID: session.id,
+        command: "goal",
+        arguments: "pause",
+        agent: "build",
+        model: "test/test-model",
+      })
+      expect(paused.parts.some((part) => part.type === "text" && part.text.includes("Status: paused"))).toBe(true)
+
+      yield* llm.tool("goal", { status: "achieved", reason: "resume verified" })
+      yield* llm.text("Resumed and finished.")
+      const resumed = yield* prompt.command({
+        sessionID: session.id,
+        command: "goal",
+        arguments: "resume",
+        agent: "build",
+        model: "test/test-model",
+      })
+      expect(resumed.parts.some((part) => part.type === "text" && part.text === "Resumed and finished.")).toBe(true)
+
+      const cleared = yield* prompt.command({
+        sessionID: session.id,
+        command: "goal",
+        arguments: "clear",
+        agent: "build",
+        model: "test/test-model",
+      })
+      expect(cleared.parts.some((part) => part.type === "text" && part.text === "Goal cleared.")).toBe(true)
+      expect(yield* goal.get(session.id)).toBeUndefined()
     }),
   { git: true },
 )

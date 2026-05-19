@@ -37,6 +37,7 @@ import { SessionProcessor } from "./processor"
 import { Tool } from "@/tool/tool"
 import { Permission } from "@/permission"
 import { SessionStatus } from "./status"
+import { SessionGoal } from "./goal"
 import { LLM } from "./llm"
 import { Shell } from "@/shell/shell"
 import { ShellID } from "@/tool/shell/id"
@@ -176,7 +177,7 @@ export interface Interface {
 
 export class Service extends Context.Service<Service, Interface>()("@sealcode/SessionPrompt") {}
 
-export const layer = Layer.effect(
+const baseLayer = Layer.effect(
   Service,
   Effect.gen(function* () {
     const bus = yield* Bus.Service
@@ -207,6 +208,7 @@ export const layer = Layer.effect(
     const references = yield* Reference.Service
     const events = yield* EventV2Bridge.Service
     const flags = yield* RuntimeFlags.Service
+    const goal = yield* SessionGoal.Service
     const runner = Effect.fn("SessionPrompt.runner")(function* () {
       return yield* EffectBridge.make()
     })
@@ -1632,6 +1634,55 @@ NOTE: At any point in time through this workflow you should feel free to ask the
       return yield* loop({ sessionID: input.sessionID })
     })
 
+    const notice = Effect.fn("SessionPrompt.notice")(function* (input: {
+      sessionID: SessionID
+      messageID?: MessageID
+      agent?: string
+      model?: string
+      variant?: string
+      commandText: string
+      text: string
+    }) {
+      const ctx = yield* InstanceState.context
+      const session = yield* sessions.get(input.sessionID).pipe(Effect.orDie)
+      const model = input.model ? Provider.parseModel(input.model) : yield* currentModel(input.sessionID)
+      const agent = input.agent ?? session.agent ?? (yield* agents.defaultInfo()).name
+      const parent = yield* prompt({
+        sessionID: input.sessionID,
+        messageID: input.messageID,
+        agent,
+        model,
+        variant: input.variant,
+        noReply: true,
+        parts: [{ type: "text", text: input.commandText }],
+      })
+      const info: MessageV2.Assistant = {
+        id: MessageID.ascending(),
+        parentID: parent.info.id,
+        role: "assistant",
+        sessionID: input.sessionID,
+        mode: agent,
+        agent,
+        cost: 0,
+        path: { cwd: ctx.directory, root: ctx.worktree },
+        tokens: { input: 0, output: 0, reasoning: 0, cache: { read: 0, write: 0 } },
+        modelID: model.modelID,
+        providerID: model.providerID,
+        time: { created: Date.now(), completed: Date.now() },
+        finish: "stop",
+      }
+      yield* sessions.updateMessage(info)
+      const part = yield* sessions.updatePart({
+        id: PartID.ascending(),
+        messageID: info.id,
+        sessionID: input.sessionID,
+        type: "text",
+        text: input.text,
+      })
+      yield* sessions.touch(input.sessionID)
+      return { info, parts: [part] }
+    })
+
     const lastAssistant = Effect.fnUntraced(function* (sessionID: SessionID) {
       const match = yield* sessions.findMessage(sessionID, (m) => m.info.role !== "user").pipe(Effect.orDie)
       if (Option.isSome(match)) return match.value
@@ -1674,6 +1725,31 @@ NOTE: At any point in time through this workflow you should feel free to ask the
             !hasToolCalls &&
             lastUser.id < lastAssistant.id
           ) {
+            const activeGoal = yield* goal.get(sessionID).pipe(Effect.orDie)
+            if (activeGoal?.status === "pursuing") {
+              const nextGoal = yield* goal
+                .recordContinuation({ sessionID, lastMessageID: lastAssistant.id })
+                .pipe(Effect.orDie)
+              if (nextGoal?.status === "pursuing") {
+                yield* prompt({
+                  sessionID,
+                  agent: lastUser.agent,
+                  model: lastUser.model,
+                  noReply: true,
+                  parts: [{ type: "text", text: SessionGoal.continuationPrompt(nextGoal), synthetic: true }],
+                }).pipe(Effect.orDie)
+                continue
+              }
+              if (nextGoal?.status === "budget_limited") {
+                yield* prompt({
+                  sessionID,
+                  agent: lastUser.agent,
+                  model: lastUser.model,
+                  noReply: true,
+                  parts: [{ type: "text", text: SessionGoal.budgetLimitPrompt(nextGoal), synthetic: true }],
+                }).pipe(Effect.orDie)
+              }
+            }
             yield* slog.info("exiting loop")
             break
           }
@@ -1889,6 +1965,86 @@ NOTE: At any point in time through this workflow you should feel free to ask the
 
     const command = Effect.fn("SessionPrompt.command")(function* (input: CommandInput) {
       yield* elog.info("command", { sessionID: input.sessionID, command: input.command, agent: input.agent })
+      if (input.command === Command.Default.GOAL) {
+        const args = input.arguments.trim()
+        if (!args || args === "status") {
+          return yield* notice({
+            sessionID: input.sessionID,
+            messageID: input.messageID,
+            agent: input.agent,
+            model: input.model,
+            variant: input.variant,
+            commandText: args ? `/goal ${args}` : "/goal",
+            text: SessionGoal.statusText(yield* goal.get(input.sessionID).pipe(Effect.orDie)),
+          })
+        }
+
+        if (args === "pause") {
+          return yield* notice({
+            sessionID: input.sessionID,
+            messageID: input.messageID,
+            agent: input.agent,
+            model: input.model,
+            variant: input.variant,
+            commandText: "/goal pause",
+            text: SessionGoal.statusText(yield* goal.pause(input.sessionID).pipe(Effect.orDie)),
+          })
+        }
+
+        if (args === "clear") {
+          yield* goal.clear(input.sessionID).pipe(Effect.orDie)
+          return yield* notice({
+            sessionID: input.sessionID,
+            messageID: input.messageID,
+            agent: input.agent,
+            model: input.model,
+            variant: input.variant,
+            commandText: "/goal clear",
+            text: "Goal cleared.",
+          })
+        }
+
+        if (args === "resume") {
+          const info = yield* goal.resume(input.sessionID).pipe(Effect.orDie)
+          if (!info) {
+            return yield* notice({
+              sessionID: input.sessionID,
+              messageID: input.messageID,
+              agent: input.agent,
+              model: input.model,
+              variant: input.variant,
+              commandText: "/goal resume",
+              text: "No active goal.",
+            })
+          }
+          yield* prompt({
+            sessionID: input.sessionID,
+            messageID: input.messageID,
+            agent: input.agent,
+            model: input.model ? Provider.parseModel(input.model) : yield* currentModel(input.sessionID),
+            variant: input.variant,
+            noReply: true,
+            parts: [{ type: "text", text: SessionGoal.continuationPrompt(info), synthetic: true }],
+          })
+          return yield* loop({ sessionID: input.sessionID })
+        }
+
+        const info = yield* goal.create({ sessionID: input.sessionID, objective: args }).pipe(Effect.orDie)
+        yield* prompt({
+          sessionID: input.sessionID,
+          messageID: input.messageID,
+          agent: input.agent,
+          model: input.model ? Provider.parseModel(input.model) : yield* currentModel(input.sessionID),
+          variant: input.variant,
+          noReply: true,
+          parts: [
+            { type: "text", text: args },
+            { type: "text", text: SessionGoal.startPrompt(info.objective), synthetic: true },
+          ],
+        })
+        return yield* loop({ sessionID: input.sessionID })
+      }
+
       const cmd = yield* commands.get(input.command)
       if (!cmd) {
         const available = (yield* commands.list()).map((c) => c.name)
@@ -2015,6 +2171,8 @@ NOTE: At any point in time through this workflow you should feel free to ask the
   }),
 )
 
+export const layer = baseLayer.pipe(Layer.provide(SessionGoal.defaultLayer))
+
 export const defaultLayer = Layer.suspend(() =>
   layer.pipe(
     Layer.provide(SessionRunState.defaultLayer),
@@ -2036,6 +2194,7 @@ export const defaultLayer = Layer.suspend(() =>
     Layer.provide(SessionRevert.defaultLayer),
     Layer.provide(SessionSummary.defaultLayer),
     Layer.provide(Image.defaultLayer),
+  ).pipe(
     Layer.provide(
       Layer.mergeAll(
         EventV2Bridge.defaultLayer,

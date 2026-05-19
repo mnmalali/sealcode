@@ -1,0 +1,7 @@
+Update the active persistent goal state.
+
+Use this tool only when a `/goal` objective is active and you have clear evidence that the objective is either complete or cannot be completed.
+
+- Use status "achieved" only after verifying the stopping condition with concrete evidence such as passing tests, successful typechecks, inspected files, or another explicit success signal.
+- Use status "unmet" only when you have exhausted viable next steps or hit a blocker that requires user intervention.
+- Do not call this tool to report ordinary progress. Continue working instead.
