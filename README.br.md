@@ -56,23 +56,13 @@ nix run nixpkgs#sealcode           # ou github:mnmalali/sealcode para a branch d
 > [!TIP]
 > Remova versões anteriores a 0.1.x antes de instalar.
 
-### App desktop (BETA)
+### Terminal UI
 
-O Seal Code também está disponível como aplicativo desktop. Baixe diretamente pela [página de releases](https://github.com/mnmalali/sealcode/releases) ou em [github.com/mnmalali/sealcode/download](https://github.com/mnmalali/sealcode/download).
+Seal Code runs in your terminal: switch agents with `Tab`, open commands with `Ctrl+P`, and connect your provider with `/connect` before you start coding.
 
-| Plataforma            | Download                           |
-| --------------------- | ---------------------------------- |
-| macOS (Apple Silicon) | `sealcode-desktop-mac-arm64.dmg`   |
-| macOS (Intel)         | `sealcode-desktop-mac-x64.dmg`     |
-| Windows               | `sealcode-desktop-windows-x64.exe` |
-| Linux                 | `.deb`, `.rpm` ou AppImage         |
-
-```bash
-# macOS (Homebrew)
-brew install --cask sealcode-desktop
-# Windows (Scoop)
-scoop bucket add extras; scoop install extras/sealcode-desktop
-```
+<p align="center">
+  <img src=".github/assets/sealcode-tui.png" alt="Seal Code terminal UI">
+</p>
 
 #### Diretório de instalação
 

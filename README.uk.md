@@ -56,23 +56,13 @@ nix run nixpkgs#sealcode           # або github:mnmalali/sealcode для на
 > [!TIP]
 > Перед встановленням видаліть версії старші за 0.1.x.
 
-### Десктопний застосунок (BETA)
+### Terminal UI
 
-Seal Code також доступний як десктопний застосунок. Завантажуйте напряму зі [сторінки релізів](https://github.com/mnmalali/sealcode/releases) або [github.com/mnmalali/sealcode/download](https://github.com/mnmalali/sealcode/download).
+Seal Code runs in your terminal: switch agents with `Tab`, open commands with `Ctrl+P`, and connect your provider with `/connect` before you start coding.
 
-| Платформа             | Завантаження                       |
-| --------------------- | ---------------------------------- |
-| macOS (Apple Silicon) | `sealcode-desktop-mac-arm64.dmg`   |
-| macOS (Intel)         | `sealcode-desktop-mac-x64.dmg`     |
-| Windows               | `sealcode-desktop-windows-x64.exe` |
-| Linux                 | `.deb`, `.rpm` або AppImage        |
-
-```bash
-# macOS (Homebrew)
-brew install --cask sealcode-desktop
-# Windows (Scoop)
-scoop bucket add extras; scoop install extras/sealcode-desktop
-```
+<p align="center">
+  <img src=".github/assets/sealcode-tui.png" alt="Seal Code terminal UI">
+</p>
 
 #### Каталог встановлення
 

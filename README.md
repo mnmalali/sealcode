@@ -41,20 +41,13 @@ bun run --cwd packages/sealcode script/build.ts --single --skip-install
 > [!TIP]
 > Package-manager installers are not published yet for this independent Seal Code project.
 
-### Desktop App (BETA)
+### Terminal UI
 
-Seal Code desktop packaging is inherited from the upstream codebase, but independent release artifacts are not published yet. Future releases will be listed on the [releases page](https://github.com/mnmalali/sealcode/releases).
+Seal Code runs in your terminal: switch agents with `Tab`, open commands with `Ctrl+P`, and connect your provider with `/connect` before you start coding.
 
-| Platform              | Download                           |
-| --------------------- | ---------------------------------- |
-| macOS (Apple Silicon) | `sealcode-desktop-mac-arm64.dmg`   |
-| macOS (Intel)         | `sealcode-desktop-mac-x64.dmg`     |
-| Windows               | `sealcode-desktop-windows-x64.exe` |
-| Linux                 | `.deb`, `.rpm`, or `.AppImage`     |
-
-```bash
-# Desktop package-manager installers are not yet published for Seal Code.
-```
+<p align="center">
+  <img src=".github/assets/sealcode-tui.png" alt="Seal Code terminal UI">
+</p>
 
 #### Installation Directory
 

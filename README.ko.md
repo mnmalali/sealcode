@@ -56,23 +56,13 @@ nix run nixpkgs#sealcode           # 또는 github:mnmalali/sealcode 로 최신 
 > [!TIP]
 > 설치 전에 0.1.x 보다 오래된 버전을 제거하세요.
 
-### 데스크톱 앱 (BETA)
+### Terminal UI
 
-Seal Code 는 데스크톱 앱으로도 제공됩니다. [releases page](https://github.com/mnmalali/sealcode/releases) 에서 직접 다운로드하거나 [github.com/mnmalali/sealcode/download](https://github.com/mnmalali/sealcode/download) 를 이용하세요.
+Seal Code runs in your terminal: switch agents with `Tab`, open commands with `Ctrl+P`, and connect your provider with `/connect` before you start coding.
 
-| 플랫폼                | 다운로드                           |
-| --------------------- | ---------------------------------- |
-| macOS (Apple Silicon) | `sealcode-desktop-mac-arm64.dmg`   |
-| macOS (Intel)         | `sealcode-desktop-mac-x64.dmg`     |
-| Windows               | `sealcode-desktop-windows-x64.exe` |
-| Linux                 | `.deb`, `.rpm`, 또는 AppImage      |
-
-```bash
-# macOS (Homebrew)
-brew install --cask sealcode-desktop
-# Windows (Scoop)
-scoop bucket add extras; scoop install extras/sealcode-desktop
-```
+<p align="center">
+  <img src=".github/assets/sealcode-tui.png" alt="Seal Code terminal UI">
+</p>
 
 #### 설치 디렉터리
 
